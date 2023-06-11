@@ -31,27 +31,54 @@ public class MyLSPWorkspaceFoldersTest extends AbstractLanguageServerTest {
 
 	@Test
 	public void testInitialize1() throws Exception {
+		// This fails
 		initialize((InitializeParams it) -> {
 			it.setWorkspaceFolders(Lists.newArrayList(new WorkspaceFolder("c:/Users/jnt0r/IdeaProjects/blub", "root1")));
 		});
 	}
-	
 	@Test
 	public void testInitialize2() throws Exception {
+		// This fails
+		initialize((InitializeParams it) -> {
+			it.setWorkspaceFolders(Lists.newArrayList(new WorkspaceFolder("c:/Users/jnt0r/IdeaProjects/blub")));
+		});
+	}
+	
+	@Test
+	public void testInitialize3() throws Exception {
+		// This fails
 		initialize((InitializeParams it) -> {
 			it.setWorkspaceFolders(Lists.newArrayList(new WorkspaceFolder("file:///c%3A/Users/jnt0r/IdeaProjects/blub")));
 		});
 	}
 	
 	@Test
-	public void testInitialize3() throws Exception {
+	public void testInitialize4() throws Exception {
+		// This succeeds
+		initialize((InitializeParams it) -> {
+			it.setWorkspaceFolders(Lists.newArrayList(new WorkspaceFolder("file:///c%3A/Users/jnt0r/IdeaProjects/blub", "root1")));
+		});
+	}
+	
+	@Test
+	public void testInitialize5() throws Exception {
+		// This fails
 		initialize((InitializeParams it) -> {
 			it.setWorkspaceFolders(Lists.newArrayList(new WorkspaceFolder("file:///c:/Users/jnt0r/IdeaProjects/blub")));
 		});
 	}
 	
 	@Test
-	public void testInitialize4() throws Exception {
+	public void testInitialize6() throws Exception {
+		// This succeeds
+		initialize((InitializeParams it) -> {
+			it.setWorkspaceFolders(Lists.newArrayList(new WorkspaceFolder("file:///c:/Users/jnt0r/IdeaProjects/blub", "root1")));
+		});
+	}
+	
+	@Test
+	public void testInitialize7() throws Exception {
+		// This succeeds
 		initialize((InitializeParams it) -> {
 			it.setRootUri("file:///c:/Users/jnt0r/IdeaProjects/blub");
 		});
